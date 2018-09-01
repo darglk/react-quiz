@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    numberOfPlayers: 1,
+    numberOfPlayers: 0,
     playerObjects: {
         name: "",
         questionAnswers: [],

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import QuestionForm from './QuestionForm';
 import QuizResults from './QuizResults';
-
+import { Redirect } from 'react-router-dom';
 class Question extends Component {
   
     state = {
@@ -55,26 +55,33 @@ class Question extends Component {
     }
 
     render() {
-        let quizForm = (
-            <Aux>
-                <h1>Quiz</h1>
-                    <QuestionForm 
-                        question={this.state.questions[this.state.questionIndex]} 
-                        handleSubmit={this.handleFormSubmit}
-                        handleChange={this.handleInputChange}
-                        answering={this.props.playerObjs["player" + (this.state.numberOfAnswers + 1)]}    
-                    />
-            </Aux>
-        );
-        if (this.didQuizFinish()) {
+        const shouldRenderForm =  Object.keys(this.props.playerObjs).length > 0 
+        && this.props.playerNums > 0;
+        let quizForm = (<Redirect to="/" />);
+        
+        if (shouldRenderForm) {
             quizForm = (
-                <QuizResults 
-                    playerObjs={this.props.playerObjs}
-                    playerNums={this.props.playerNums}
-                    questions={this.state.questions}
-                />
+                <Aux>
+                    <h1>Quiz</h1>
+                        <QuestionForm 
+                            question={this.state.questions[this.state.questionIndex]} 
+                            handleSubmit={this.handleFormSubmit}
+                            handleChange={this.handleInputChange}
+                            answering={this.props.playerObjs["player" + (this.state.numberOfAnswers + 1)]}    
+                        />
+                </Aux>
             );
+            if (this.didQuizFinish()) {
+                quizForm = (
+                    <QuizResults 
+                        playerObjs={this.props.playerObjs}
+                        playerNums={this.props.playerNums}
+                        questions={this.state.questions}
+                    />
+                );
+            }
         }
+
         return (
             <Row>
                 <Col sm="12" md={{ size: 8, offset: 2 }}>

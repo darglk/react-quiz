@@ -32,7 +32,7 @@ export default class NavigationBar extends Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+                <NavLink href="https://github.com/darglk/react-quiz">GitHub</NavLink>
               </NavItem>
             </Nav>
           </Collapse>
