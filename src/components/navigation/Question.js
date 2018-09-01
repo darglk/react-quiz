@@ -58,22 +58,20 @@ class Question extends Component {
         let quizForm = (
             <Aux>
                 <h1>Quiz</h1>
-                {this.state.questionIndex < this.state.questions.length ? 
                     <QuestionForm 
-                    question={this.state.questions[this.state.questionIndex]} 
-                    handleSubmit={this.handleFormSubmit}
-                    handleChange={this.handleInputChange}
-                    answering={this.props.playerObjs["player" + (this.state.numberOfAnswers + 1)]}    
-                    /> : null
-                }
+                        question={this.state.questions[this.state.questionIndex]} 
+                        handleSubmit={this.handleFormSubmit}
+                        handleChange={this.handleInputChange}
+                        answering={this.props.playerObjs["player" + (this.state.numberOfAnswers + 1)]}    
+                    />
             </Aux>
         );
         if (this.didQuizFinish()) {
             quizForm = (
                 <QuizResults 
-                playerObjs={this.props.playerObjs}
-                playerNums={this.props.playerNums}
-                questions={this.state.questions}
+                    playerObjs={this.props.playerObjs}
+                    playerNums={this.props.playerNums}
+                    questions={this.state.questions}
                 />
             );
         }
