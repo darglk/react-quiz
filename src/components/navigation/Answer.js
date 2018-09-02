@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { ListGroupItem } from 'reactstrap';
 
 const answer = (props) => {
-    console.log(props)
     return (
         <ListGroupItem>{props.playerName} answer: {props.actualKey}
             <br />

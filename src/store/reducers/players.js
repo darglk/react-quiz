@@ -14,7 +14,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.CHANGE_PLAYERS_NUMBER:
         return {
             ...state,
-            numberOfPlayers: action.numberOfPlayers,
+            numberOfPlayers: parseInt(action.numberOfPlayers, 10),
         }
         case actionTypes.CHANGE_PLAYER_NAME:
         return {

@@ -36,6 +36,15 @@ class Question extends Component {
         }]
     };
 
+    constructor(props) {
+        super(props);
+        this.shouldRerender = false;
+    }
+
+    shouldComponentUpdate() {
+        return this.shouldRerender;
+    }
+
     didQuizFinish = () => {
         return this.state.questionIndex >= this.state.questions.length;
     }
@@ -43,17 +52,18 @@ class Question extends Component {
     handleFormSubmit = (event) => {
         event.preventDefault();
         const playersNum = Object.keys(this.props.playerObjs).length;
-         
+        this.shouldRerender = true;
         if (this.state.numberOfAnswers < playersNum) {
             this.props.onAnswerQuestion("player" + (this.state.numberOfAnswers + 1), this.state.selectedAnswer, this.state.questions[this.state.questionIndex].correct);
             this.setState((prevState, props) => ({
                 numberOfAnswers: (prevState.numberOfAnswers + 1) >= playersNum ? 0 : prevState.numberOfAnswers + 1,
-                questionIndex: (prevState.numberOfAnswers + 1) >= playersNum ? prevState.questionIndex + 1 : prevState.questionIndex
+                questionIndex: (prevState.numberOfAnswers + 1) >= playersNum ? prevState.questionIndex + 1 : prevState.questionIndex,
             })); 
         } 
     }
 
     handleInputChange = (event) => {
+        this.shouldRerender = false;
         this.setState({selectedAnswer: event.target.value});
     }
 
@@ -61,7 +71,7 @@ class Question extends Component {
         const shouldRenderForm =  Object.keys(this.props.playerObjs).length > 0 
         && this.props.playerNums > 0;
         let quizForm = (<Redirect to="/" />);
-        
+        console.log('render()');
         if (shouldRenderForm) {
             quizForm = (
                 <Aux>
