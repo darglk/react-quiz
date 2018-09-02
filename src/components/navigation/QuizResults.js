@@ -30,6 +30,7 @@ class QuizResults extends Component {
             <Aux>
                 <h1>Results of quiz</h1>
                 {content}
+                <br />
                 {totalPoints}
             </Aux>
         );

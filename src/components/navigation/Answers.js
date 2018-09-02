@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Answer from './Answer';
-import Aux from '../../hoc/Aux';
+import { ListGroup, ListGroupItem } from 'reactstrap';
 import PropTypes from 'prop-types';
+import Aux from '../../hoc/Aux';
 
 class Answers extends Component {
 
@@ -13,17 +14,21 @@ class Answers extends Component {
                     actualKey={actualAnswerKey}
                     playerName={this.props.playerObjs[key].name}
                     actualAnswer={this.props.question.answers[actualAnswerKey]}
+                    correctAnswer={this.props.question.correct}
                 />
             )
         });
         return (
             <Aux>
-                <p> {this.props.index + 1}. {this.props.question.question}</p>
-                {answers}
-                <p>
-                    Actual answer: {this.props.question.correct} - 
-                    <strong>{this.props.question.answers[this.props.question.correct]}</strong>
-                </p>
+                <ListGroup>
+                    <ListGroupItem active> {this.props.index + 1}. {this.props.question.question}</ListGroupItem>
+                    {answers}
+                    <ListGroupItem>
+                        Actual answer: {this.props.question.correct} - 
+                        <strong>{" " + this.props.question.answers[this.props.question.correct]}</strong>
+                    </ListGroupItem>
+                </ListGroup>
+                <br />
             </Aux>
         );
     }

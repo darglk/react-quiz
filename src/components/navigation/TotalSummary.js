@@ -1,14 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ListGroup, ListGroupItem, Progress } from 'reactstrap';
 
 const totalSummary = (props) => {
     let total = props.total;
     let questionNum = props.questionLen;
     let percentage = (total / questionNum) * 100;
     return (
-        <p>
-            {props.playerName} total points: {total}/{questionNum} {percentage.toFixed(1)}%
-        </p>
+        <ListGroup>
+            <ListGroupItem>
+                <div className="text-center">
+                    <strong>{props.playerName}</strong> total points: {' '}
+                    {total} of {questionNum} ({percentage.toFixed(0)})%
+                </div>
+                <Progress striped value={percentage} />
+            </ListGroupItem>
+        </ListGroup>
     );
 };
 

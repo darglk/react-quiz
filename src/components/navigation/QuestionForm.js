@@ -22,7 +22,6 @@ class QuestionForm extends Component {
                         <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
                                     <Input
-                                    checked={index === 0 ? "checked": ""}
                                     addon
                                     type="radio" 
                                     name="question" 

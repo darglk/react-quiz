@@ -13,7 +13,7 @@ class Question extends Component {
     state = {
         numberOfAnswers: 0,
         questionIndex: 0,
-        selectedAnswer: "a",
+        selectedAnswer: "",
         questions: [{
             question: "Which protocol is the current Layer 3 protocol predominantly used on the Internet?",
             answers: {
