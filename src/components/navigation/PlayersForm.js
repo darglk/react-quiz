@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-//import { BrowserRouter,Route, Switch } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Aux from '../../hoc/Aux';
-import { Row, Col, FormGroup, Form, Input, Button } from 'reactstrap';
+import { Row, Col, FormGroup, Form, Input, Button, Alert, ListGroup, ListGroupItem } from 'reactstrap';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 
@@ -18,14 +18,39 @@ class PlayersForm extends Component {
             }
         }
         this.state = {
-            playerNames: playerObjects
+            playerNames: playerObjects,
+            showAlert: false,
+            canSubmit: false,
         }
+        this.inputs = [];
     }
 
     handleFormSubmit = (event) => {
         event.preventDefault();
-        this.props.onSetPlayerNames(this.state.playerNames);
-        this.props.history.push('/quiz');
+        if (this.state.canSubmit) {
+            this.props.onSetPlayerNames(this.state.playerNames);
+            this.props.history.push('/quiz');
+        }
+    }
+
+    setInputFrame = (event, didNotMatch) => {
+        const inp = this.inputs.find(input => {
+            return input.props.name === event.target.name
+        });
+        inp.invalid = didNotMatch;
+    }
+
+    validateName = (name, event) => {
+        const regex = /^[A-Za-z]+$/gm;
+        const didNotMatch = !regex.test(name);
+        if (didNotMatch) {
+            this.setState({showAlert: true});
+            this.setState({canSubmit: false})
+        } else {
+            this.setState({showAlert: false});
+            this.setState({canSubmit: true})
+        }
+        this.setInputFrame(event, didNotMatch);
     }
 
     handleNameChange = (event) => {
@@ -33,39 +58,57 @@ class PlayersForm extends Component {
         const userObj = {...oldState[event.target.name]};
         userObj.name = event.target.value;
         oldState[event.target.name] = userObj;
+        this.validateName(userObj.name, event);
         this.setState({playerNames: oldState});
     }
 
 
     render() {
         const playersInputs = [];
+        let form = (
+            <Redirect to="/" />
+        );
         for (let i = 0; i < this.props.players; i++) {
+            const invalidForm = this.inputs[i] !== undefined && this.inputs[i].invalid;
             playersInputs.push(
                 (
                     <FormGroup key={i}>
+                        {invalidForm ? <Alert color="danger">Name can contain only letters</Alert> : null }
                         <Input 
                             type="text" 
                             name={"player" + (i + 1)} 
                             placeholder={"Player " + (i + 1) + " name"}
                             onChange={this.handleNameChange} 
                             value={this.state.playerNames["player" + (i + 1)].name}
+                            ref={(inp) => {this.inputs[i] = inp}}
+                            invalid={invalidForm}
                             />
                     </FormGroup>
                 )
             );
         }
+        if (this.props.players > 0) {
+            form = (
+                <Aux>
+                    <Row>
+                        <Col sm="12" md={{ size: 8, offset: 2 }}>
+                            <br />
+                            <ListGroupItem active>Enter player names</ListGroupItem>
+                            <ListGroup>
+                                <ListGroupItem>
+                                    <Form onSubmit={this.handleFormSubmit}>
+                                        {playersInputs}
+                                        <Button type="submit" disabled={!this.state.canSubmit}>Submit</Button>
+                                    </Form>
+                                </ListGroupItem>
+                            </ListGroup>
+                        </Col>
+                    </Row>
+                </Aux>
+            );
+        }
         return (
-        <Aux>
-            <Row>
-                <Col sm="12" md={{ size: 8, offset: 2 }}>
-                    <h1>Enter players names</h1>
-                    <Form onSubmit={this.handleFormSubmit}>
-                        {playersInputs}
-                        <Button type="submit">Submit</Button>
-                    </Form>
-                </Col>
-            </Row>
-        </Aux>
+            form
         );
     }
 }
