@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Aux from '../../hoc/Aux';
 import TotalSummary from './TotalSummary';
-import Answers from './Answers';
+import Answers from '../Answer/Answers';
 import PropTypes from 'prop-types';
 
 class QuizResults extends Component {

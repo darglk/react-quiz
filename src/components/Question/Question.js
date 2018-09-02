@@ -4,7 +4,7 @@ import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import QuestionForm from './QuestionForm';
-import QuizResults from './QuizResults';
+import QuizResults from '../QuizSummary/QuizResults';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 

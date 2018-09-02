@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { BrowserRouter,Route, Switch } from 'react-router-dom';
 import Layout from './hoc/Layout';
 import NavigationBar from './components/navigation/NavigationBar';
-import PlayersNumForm from './components/navigation/PlayersNumForm';
+import PlayersNumForm from './components/Players/PlayersNumForm';
 import Aux from './hoc/Aux';
 import './App.css';
 import { Container } from 'reactstrap';
-import PlayersForm from './components/navigation/PlayersForm';
-import Question from './components/navigation/Question';
+import PlayersForm from './components/Players/PlayersForm';
+import Question from './components/Question/Question';
 
 class App extends Component {
   render() {
