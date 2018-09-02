@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FormGroup, Form, Label, Input, Button } from 'reactstrap';
-
+import PropTypes from 'prop-types';
 
 class QuestionForm extends Component {
     render() {
@@ -32,6 +32,11 @@ class QuestionForm extends Component {
     }
 }
 
-
+QuestionForm.propTypes = {
+    answering: PropTypes.object,
+    question: PropTypes.object,
+    handleSubmit: PropTypes.func,
+    handleChange: PropTypes.func
+};
 
 export default QuestionForm;

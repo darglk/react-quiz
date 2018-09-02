@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const totalSummary = (props) => {
     let total = props.total;
@@ -9,6 +10,12 @@ const totalSummary = (props) => {
             {props.playerName} total points: {total}/{questionNum} {percentage.toFixed(1)}%
         </p>
     );
+};
+
+totalSummary.propTypes = {
+    total: PropTypes.number,
+    playerName: PropTypes.string,
+    questionLen: PropTypes.number,
 };
 
 export default totalSummary;

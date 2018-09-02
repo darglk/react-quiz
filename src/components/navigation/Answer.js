@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const answer = (props) => {
     return (
@@ -8,5 +9,10 @@ const answer = (props) => {
         </p>
     )
 }
+answer.propTypes = {
+    playerName: PropTypes.string,
+    actualKey: PropTypes.string,
+    actualAnswer: PropTypes.string
+};
 
 export default answer;

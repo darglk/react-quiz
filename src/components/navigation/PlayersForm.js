@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import Aux from '../../hoc/Aux';
 import { Row, Col, FormGroup, Form, Input, Button, Alert, ListGroup, ListGroupItem } from 'reactstrap';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import * as actions from '../../store/actions/index';
 
 class PlayersForm extends Component {
@@ -123,6 +124,11 @@ const mapDispatchToProps = dispatch => {
     return {
         onSetPlayerNames: (playerNames) => dispatch(actions.changePlayerName(playerNames))
     };
+};
+
+PlayersForm.propTypes = {
+    players: PropTypes.number,
+    onSetPlayerNames: PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayersForm);

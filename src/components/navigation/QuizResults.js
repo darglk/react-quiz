@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Aux from '../../hoc/Aux';
 import TotalSummary from './TotalSummary';
 import Answers from './Answers';
+import PropTypes from 'prop-types';
 
 class QuizResults extends Component {
     render() {
@@ -34,5 +35,10 @@ class QuizResults extends Component {
         );
     }
 }
+
+QuizResults.propTypes = {
+    playerObjs: PropTypes.object,
+    questions: PropTypes.array
+};
 
 export default QuizResults;

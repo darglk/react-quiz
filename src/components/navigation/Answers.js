@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Answer from './Answer';
 import Aux from '../../hoc/Aux';
+import PropTypes from 'prop-types';
 
 class Answers extends Component {
 
@@ -27,5 +28,11 @@ class Answers extends Component {
         );
     }
 }
+
+Answers.propTypes = {
+    question: PropTypes.object,
+    playerObjs: PropTypes.object,
+    index: PropTypes.number
+};
 
 export default Answers;

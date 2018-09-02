@@ -6,6 +6,8 @@ import * as actions from '../../store/actions/index';
 import QuestionForm from './QuestionForm';
 import QuizResults from './QuizResults';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
 class Question extends Component {
   
     state = {
@@ -103,6 +105,12 @@ const mapDispatchToProps = dispatch => {
     return {
         onAnswerQuestion: (userId, answer, correct) => dispatch(actions.answerQuestion(userId, answer, correct))
     };
+};
+
+Question.propTypes = {
+    playerNums: PropTypes.number,
+    playerObjs: PropTypes.object,
+    onAnswerQuestion: PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Question);
