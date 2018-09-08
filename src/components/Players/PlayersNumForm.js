@@ -32,7 +32,7 @@ class PlayersNumForm extends Component {
                         <ListGroupItem>
                             <Form onSubmit={this.handleFormSubmit}>
                                 <FormGroup>
-                                    <Label for="exampleEmail">Number of players</Label>
+                                    <Label for="playersNum">Number of players</Label>
                                     <Input 
                                         type="number" 
                                         name="playersNum" 
