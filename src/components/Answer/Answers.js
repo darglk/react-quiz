@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Answer from './Answer';
-import { ListGroup, ListGroupItem, Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import { ListGroup, ListGroupItem, Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 import Aux from '../../hoc/Aux';
+import Popover from '../UI/Popover';
 
 class Answers extends Component {
 
@@ -35,13 +36,11 @@ class Answers extends Component {
                         Actual answer: {this.props.question.correct} - 
                         <strong>{" " + this.props.question.answers[this.props.question.correct]}</strong>
                         {this.props.question.explaination !== undefined ? 
-                            <Aux>
-                                {'  '}<Button id="Popover1" size="sm" color="info" onClick={this.toggle}>Explaination</Button> 
-                                <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.toggle}>
-                                    <PopoverHeader>Question Explaination</PopoverHeader>
-                                    <PopoverBody>{this.props.question.explaination}</PopoverBody>
-                                </Popover>
-                            </Aux>
+                            <Popover 
+                                popoverOpen={this.state.popoverOpen}
+                                question={this.props.question}
+                                toggle={this.toggle}
+                                />
                             : null}
                     </ListGroupItem>
                 </ListGroup>
