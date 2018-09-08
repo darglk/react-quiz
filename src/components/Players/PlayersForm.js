@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as actions from '../../store/actions/index';
 
-class PlayersForm extends Component {
+export class PlayersForm extends Component {
 
     constructor(props) {
         super(props);
@@ -62,7 +62,6 @@ class PlayersForm extends Component {
         this.validateName(userObj.name, event);
         this.setState({playerNames: oldState});
     }
-
 
     render() {
         const playersInputs = [];
