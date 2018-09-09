@@ -15,7 +15,7 @@ import PropTypes from 'prop-types';
 class QuestionForm extends Component {
     render() {
         const answers = this.props.question.answers;
-        const inputs = Object.keys(answers).map((key, index) => {
+        const inputs = Object.keys(answers).map((key) => {
             return (
                 <ListGroupItem key={key}>
                     <InputGroup>

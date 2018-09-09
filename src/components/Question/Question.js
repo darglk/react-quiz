@@ -23,16 +23,6 @@ class Question extends Component {
                 d: "IPv6"
             },
             correct: "b",
-            explaination: "because god wanted that"
-        },{
-            question: "Which protocol is the current Layer 3 protocol predominantly used on the Internet?",
-            answers: {
-                a: "IPv3",
-                b: "IPv4",
-                c: "IPv5",
-                d: "IPv6"
-            },
-            correct: "b"
         }]
     };
 
@@ -71,7 +61,6 @@ class Question extends Component {
         const shouldRenderForm =  Object.keys(this.props.playerObjs).length > 0 
         && this.props.playerNums > 0;
         let quizForm = (<Redirect to="/" />);
-        console.log('render()');
         if (shouldRenderForm) {
             quizForm = (
                 <Aux>
@@ -84,7 +73,7 @@ class Question extends Component {
                         />
                 </Aux>
             );
-            if (this.didQuizFinish()) {
+            if (this.didQuizFinish()) {  
                 quizForm = (
                     <QuizResults 
                         playerObjs={this.props.playerObjs}
