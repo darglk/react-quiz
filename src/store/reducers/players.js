@@ -22,7 +22,6 @@ const reducer = (state = initialState, action) => {
             playerObjects: {...action.playerObjects}
         };
         case actionTypes.ANSWER_QUESTION:
-        console.log(action.correct);
         const playerObjs = {...state.playerObjects};
         const playerObj = {...playerObjs[action.userId]};
         const point = action.answer === action.correct ? 1 : 0;
