@@ -5,6 +5,9 @@ import { Row, Col, FormGroup, Form, Input, Button, Alert, ListGroup, ListGroupIt
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as actions from '../../store/actions/index';
+import axios from 'axios';
+import withErrorHandler from '../../hoc/WithErrorHandler';
+import Spinner from '../UI/Spinner';
 
 export class PlayersForm extends Component {
 
@@ -23,14 +26,20 @@ export class PlayersForm extends Component {
             showAlert: false,
             canSubmit: false,
         }
-        this.inputs = [];
+        this.inputs = [];        
+    }
+
+    componentDidUpdate() {
+        if (this.props.fetchSuccess) {
+            this.props.history.push('/quiz');
+        }
     }
 
     handleFormSubmit = (event) => {
         event.preventDefault();
         if (this.state.canSubmit) {
             this.props.onSetPlayerNames(this.state.playerNames);
-            this.props.history.push('/quiz');
+            this.props.onFetchQuestions();
         }
     }
 
@@ -64,47 +73,53 @@ export class PlayersForm extends Component {
     }
 
     render() {
-        const playersInputs = [];
         let form = (
             <Redirect to="/" />
         );
-        for (let i = 0; i < this.props.players; i++) {
-            const invalidForm = this.inputs[i] !== undefined && this.inputs[i].invalid;
-            playersInputs.push(
-                (
-                    <FormGroup key={i}>
-                        {invalidForm ? <Alert color="danger">Name can contain only letters</Alert> : null }
-                        <Input 
-                            type="text" 
-                            name={"player" + (i + 1)} 
-                            placeholder={"Player " + (i + 1) + " name"}
-                            onChange={this.handleNameChange} 
-                            value={this.state.playerNames["player" + (i + 1)].name}
-                            ref={(inp) => {this.inputs[i] = inp}}
-                            invalid={invalidForm}
-                            />
-                    </FormGroup>
-                )
-            );
-        }
-        if (this.props.players > 0) {
+        if (!this.props.loading && !this.props.fetchSuccess) {
+            const playersInputs = [];  
+            for (let i = 0; i < this.props.players; i++) {
+                const invalidForm = this.inputs[i] !== undefined && this.inputs[i].invalid;
+                playersInputs.push(
+                    (
+                        <FormGroup key={i}>
+                            {invalidForm ? <Alert color="danger">Name can contain only letters</Alert> : null }
+                            <Input 
+                                type="text" 
+                                name={"player" + (i + 1)} 
+                                placeholder={"Player " + (i + 1) + " name"}
+                                onChange={this.handleNameChange} 
+                                value={this.state.playerNames["player" + (i + 1)].name}
+                                ref={(inp) => {this.inputs[i] = inp}}
+                                invalid={invalidForm}
+                                />
+                        </FormGroup>
+                    )
+                );
+            }
+            if (this.props.players > 0) {
+                form = (
+                    <Aux>
+                        <Row>
+                            <Col sm="12" md={{ size: 8, offset: 2 }}>
+                                <br />
+                                <ListGroupItem active>Enter player names</ListGroupItem>
+                                <ListGroup>
+                                    <ListGroupItem>
+                                        <Form onSubmit={this.handleFormSubmit}>
+                                            {playersInputs}
+                                            <Button type="submit" disabled={!this.state.canSubmit}>Submit</Button>
+                                        </Form>
+                                    </ListGroupItem>
+                                </ListGroup>
+                            </Col>
+                        </Row>
+                    </Aux>
+                );
+            }
+        } else {
             form = (
-                <Aux>
-                    <Row>
-                        <Col sm="12" md={{ size: 8, offset: 2 }}>
-                            <br />
-                            <ListGroupItem active>Enter player names</ListGroupItem>
-                            <ListGroup>
-                                <ListGroupItem>
-                                    <Form onSubmit={this.handleFormSubmit}>
-                                        {playersInputs}
-                                        <Button type="submit" disabled={!this.state.canSubmit}>Submit</Button>
-                                    </Form>
-                                </ListGroupItem>
-                            </ListGroup>
-                        </Col>
-                    </Row>
-                </Aux>
+                <Spinner />
             );
         }
         return (
@@ -115,13 +130,16 @@ export class PlayersForm extends Component {
 
 const mapStateToProps = state => {
     return {
-        players: state.players.numberOfPlayers
+        players: state.players.numberOfPlayers,
+        loading: state.players.loading,
+        fetchSuccess: state.players.success
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onSetPlayerNames: (playerNames) => dispatch(actions.changePlayerName(playerNames))
+        onSetPlayerNames: (playerNames) => dispatch(actions.changePlayerName(playerNames)),
+        onFetchQuestions: () => dispatch(actions.fetchQuestions())
     };
 };
 
@@ -130,4 +148,4 @@ PlayersForm.propTypes = {
     onSetPlayerNames: PropTypes.func
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlayersForm);
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(PlayersForm, axios));

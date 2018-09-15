@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Answer from './Answer';
-import { ListGroup, ListGroupItem, Button } from 'reactstrap';
+import { ListGroup, ListGroupItem } from 'reactstrap';
 import PropTypes from 'prop-types';
 import Aux from '../../hoc/Aux';
 import Popover from '../UI/Popover';

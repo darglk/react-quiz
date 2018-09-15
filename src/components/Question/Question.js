@@ -14,16 +14,6 @@ class Question extends Component {
         numberOfAnswers: 0,
         questionIndex: 0,
         selectedAnswer: "",
-        questions: [{
-            question: "Which protocol is the current Layer 3 protocol predominantly used on the Internet?",
-            answers: {
-                a: "IPv3",
-                b: "IPv4",
-                c: "IPv5",
-                d: "IPv6"
-            },
-            correct: "b",
-        }]
     };
 
     constructor(props) {
@@ -36,7 +26,7 @@ class Question extends Component {
     }
 
     didQuizFinish = () => {
-        return this.state.questionIndex >= this.state.questions.length;
+        return this.state.questionIndex >= this.props.questions.length;
     }
 
     handleFormSubmit = (event) => {
@@ -44,7 +34,7 @@ class Question extends Component {
         const playersNum = Object.keys(this.props.playerObjs).length;
         this.shouldRerender = true;
         if (this.state.numberOfAnswers < playersNum) {
-            this.props.onAnswerQuestion("player" + (this.state.numberOfAnswers + 1), this.state.selectedAnswer, this.state.questions[this.state.questionIndex].correct);
+            this.props.onAnswerQuestion("player" + (this.state.numberOfAnswers + 1), this.state.selectedAnswer, this.props.questions[this.state.questionIndex].correct);
             this.setState((prevState, props) => ({
                 numberOfAnswers: (prevState.numberOfAnswers + 1) >= playersNum ? 0 : prevState.numberOfAnswers + 1,
                 questionIndex: (prevState.numberOfAnswers + 1) >= playersNum ? prevState.questionIndex + 1 : prevState.questionIndex,
@@ -66,7 +56,7 @@ class Question extends Component {
                 <Aux>
                     <h1>Quiz</h1>
                         <QuestionForm 
-                            question={this.state.questions[this.state.questionIndex]} 
+                            question={this.props.questions[this.state.questionIndex]} 
                             handleSubmit={this.handleFormSubmit}
                             handleChange={this.handleInputChange}
                             answering={this.props.playerObjs["player" + (this.state.numberOfAnswers + 1)]}    
@@ -78,7 +68,7 @@ class Question extends Component {
                     <QuizResults 
                         playerObjs={this.props.playerObjs}
                         playerNums={this.props.playerNums}
-                        questions={this.state.questions}
+                        questions={this.props.questions}
                     />
                 );
             }
@@ -97,7 +87,8 @@ class Question extends Component {
 const mapStateToProps = state => {
     return {
         playerNums: state.players.numberOfPlayers,
-        playerObjs: state.players.playerObjects
+        playerObjs: state.players.playerObjects,
+        questions: state.players.questions
     };
 };
 

@@ -6,7 +6,36 @@ const initialState = {
         name: "",
         questionAnswers: [],
         total: 0
-    }
+    },
+    questions: {
+
+    },
+    error: false,
+    loading: false,
+    success: false
+};
+
+const updateObject = (oldObject, updatedProperties) => {
+    return {
+        ...oldObject,
+        ...updatedProperties
+    };
+};
+
+const fetchQuestionsStart = ( state, action ) => {
+    return updateObject( state, { loading: true } );
+};
+
+const fetchQuestionsSuccess = ( state, action ) => {
+    return updateObject( state, {
+        questions: action.questions,
+        loading: false,
+        success: true
+    } );
+};
+
+const fetchQuestionsFail = ( state, action ) => {
+    return updateObject( state, { loading: false } );
 };
 
 const reducer = (state = initialState, action) => {
@@ -37,6 +66,9 @@ const reducer = (state = initialState, action) => {
             ...state,
             playerObjects: playerObjs
         };
+        case actionTypes.FETCH_QUESTIONS_START: return fetchQuestionsStart(state, action);
+        case actionTypes.FETCH_QUESTIONS_FAIL: return fetchQuestionsFail(state, action);
+        case actionTypes.FETCH_QUESTIONS_SUCCESS: return fetchQuestionsSuccess(state, action);
         default: return {...state};
     }
 };
