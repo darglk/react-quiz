@@ -79,7 +79,10 @@ export class PlayersForm extends Component {
         if (!this.props.loading && !this.props.fetchSuccess) {
             const playersInputs = [];  
             for (let i = 0; i < this.props.players; i++) {
-                const invalidForm = this.inputs[i] !== undefined && this.inputs[i].invalid;
+                let invalidForm = false 
+                if (this.inputs[i] !== null ) {
+                    invalidForm = this.inputs[i] !== undefined && this.inputs[i].invalid;
+                }
                 playersInputs.push(
                     (
                         <FormGroup key={i}>
