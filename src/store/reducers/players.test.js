@@ -9,7 +9,11 @@ describe('players reducer', () => {
                 name: "",
                 questionAnswers: [],
                 total: 0
-            }
+            },
+            questions: {},
+            error: false,
+            loading: false,
+            success: false
         });
     });
 
@@ -99,5 +103,65 @@ describe('players reducer', () => {
             correct: "b"
         });
         expect(result.playerObjects.player1.total).toEqual(0);
+    });
+
+    it('should test start of fetching questions', () => {
+        const initialState = {
+            numberOfPlayers: 0,
+            playerObjects: {
+                name: "",
+                questionAnswers: [],
+                total: 0
+            },
+            questions: {},
+            error: false,
+            loading: false,
+            success: false
+        };
+        const result = reducer(initialState, {
+            type: actionTypes.FETCH_QUESTIONS_START
+        });
+        expect(result.loading).toEqual(true);
+    });
+
+    it('should test successful question fetching', () => {
+        const initialState = {
+            numberOfPlayers: 0,
+            playerObjects: {
+                name: "",
+                questionAnswers: [],
+                total: 0
+            },
+            questions: {},
+            error: false,
+            loading: false,
+            success: false
+        };
+        const result = reducer(initialState, {
+            type: actionTypes.FETCH_QUESTIONS_SUCCESS,
+            questions: {},
+        });
+        expect(result.loading).toEqual(false);
+        expect(result.success).toEqual(true);
+    });
+
+    it('should test unsuccessful question fetching', () => {
+        const initialState = {
+            numberOfPlayers: 0,
+            playerObjects: {
+                name: "",
+                questionAnswers: [],
+                total: 0
+            },
+            questions: {},
+            error: false,
+            loading: false,
+            success: false
+        };
+        const result = reducer(initialState, {
+            type: actionTypes.FETCH_QUESTIONS_FAIL,
+        });
+        expect(result.loading).toEqual(false);
+        expect(result.success).toEqual(false);
     });
 });

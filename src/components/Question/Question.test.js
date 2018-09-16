@@ -24,7 +24,17 @@ describe('<Question /> component tests', () => {
                             questionAnswers: [{actual: "a"}],
                             total: 0
                         }
-                    }
+                    },
+                    questions: [{
+                        question: "Which protocol is the current Layer 3 protocol predominantly used on the Internet?",
+                        answers: {
+                            a: "IPv3",
+                            b: "IPv4",
+                            c: "IPv5",
+                            d: "IPv6"
+                        },
+                        correct: "b",
+                    }]
                 }, 
             }
         },

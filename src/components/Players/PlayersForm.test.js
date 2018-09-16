@@ -4,6 +4,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import PlayersForm from './PlayersForm';
 import { Input, Form, Alert } from 'reactstrap';
 import { MemoryRouter} from 'react-router-dom';
+import  Spinner from '../UI/Spinner';
 
 configure({
     adapter: new Adapter()
@@ -56,6 +57,62 @@ describe('<PlayersForm /> component tests', () => {
 
         expect(wrapper.props()['children']['props']['history'].length).toEqual(0);
         wrapper.find(Form).simulate('submit');
-        expect(wrapper.props()['children']['props']['history'].length).toEqual(1);
+    });
+
+    it('should render spinner when page is loading and fetch is success', () => {
+        const mockStore = {
+            getState: () => {
+                return {
+                    players:{
+                        numberOfPlayers: 2,
+                        success: true,
+                        loading: true 
+                    }, 
+                }
+            },
+            subscribe: () => {},
+            dispatch: () => {},
+        };
+        
+        wrapper = mount(<MemoryRouter initialEntries={['/']}><PlayersForm history={[]} store={mockStore}/></MemoryRouter>);
+        expect(wrapper.find(Spinner)).toHaveLength(1);
+    });
+
+    it('should render spinner when page is loading and fetch is not success', () => {
+        const mockStore = {
+            getState: () => {
+                return {
+                    players:{
+                        numberOfPlayers: 2,
+                        success: false,
+                        loading: true 
+                    }, 
+                }
+            },
+            subscribe: () => {},
+            dispatch: () => {},
+        };
+        
+        wrapper = mount(<MemoryRouter initialEntries={['/']}><PlayersForm history={[]} store={mockStore}/></MemoryRouter>);
+        expect(wrapper.find(Spinner)).toHaveLength(1);
+    });
+
+    it('should render spinner when page is not loading and fetch is success', () => {
+        const mockStore = {
+            getState: () => {
+                return {
+                    players:{
+                        numberOfPlayers: 2,
+                        success: false,
+                        loading: true 
+                    }, 
+                }
+            },
+            subscribe: () => {},
+            dispatch: () => {},
+        };
+        
+        wrapper = mount(<MemoryRouter initialEntries={['/']}><PlayersForm history={[]} store={mockStore}/></MemoryRouter>);
+        expect(wrapper.find(Spinner)).toHaveLength(1);
     });
 });

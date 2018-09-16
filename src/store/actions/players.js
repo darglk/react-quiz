@@ -47,7 +47,7 @@ export const fetchQuestionsStart = () => {
 export const fetchQuestions = () => {
     return dispatch => {
         dispatch(fetchQuestionsStart());
-        axios.get('https://ipv6coursequiz.firebaseio.com//questions.json')
+        axios.get('https://ipv6coursequiz.firebaseio.com/questions.json')
             .then(res => {
                 const fetchedQuestions = [];
                 for (let key in res.data) {
